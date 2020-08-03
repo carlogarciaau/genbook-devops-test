@@ -8,6 +8,7 @@ steps:
     args: ['push', 'asia.gcr.io/genbook-test-285222/genbook-test']
 
   # Copy the app config file from GCS bucket
+  # The pipeline assumes the config file is named 'application.properties' and it's located in the bucket below.
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['cp', 'gs://genbook-test/application.properties', 'application.properties']
 
