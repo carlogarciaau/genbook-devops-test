@@ -1,7 +1,8 @@
 # genbook-devops-test
 
 ## Summary
-This project deploys a basic tomcat application and a corresponding configuration file. <br>
+This project deploys a basic tomcat application and a corresponding configuration file to GKE. <br>
+The app can currently be accessed from http://34.87.227.79:8080
 
 ## Environment Details
 * Build and deploy is managed by a pipeline running in Cloud Build. See *cloudbuild.yaml* for the pipeline code. This does not include building of the app code, only the docker image.
