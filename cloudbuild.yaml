@@ -17,7 +17,7 @@ steps:
     args:
       - '-c'
       - |-
-        kubectl create configmap hello-world-config --from-file application.properties --dry-run=client -o yaml > configmap.yaml
+        kubectl create configmap hello-world-config --from-file application.properties --dry-run -o yaml > configmap.yaml
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a'
       - 'CLOUDSDK_CONTAINER_CLUSTER=genbook-test-cluster'
