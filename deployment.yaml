@@ -35,14 +35,14 @@ spec:
           httpGet:
             path: /
             port: http
-          initialDelaySeconds: 180
+          initialDelaySeconds: 300
           periodSeconds: 300
         readinessProbe:
           httpGet:
             path: /
             port: http
-          initialDelaySeconds: 180
-          periodSeconds: 300
+          initialDelaySeconds: 30
+          periodSeconds: 30
         volumeMounts:
           - name: config-volume
             mountPath: /opt/config/application.properties
