@@ -17,15 +17,20 @@ steps:
       - '-c'
       - |-
         kubectl create configmap hello-world-config --from-file application.properties --dry-run=client -o yaml > configmap.yaml
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=genbook-test-cluster'
 
   # Apply configmap
-  # kubectl apply -f configmap.yaml
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'configmap.yaml']
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=genbook-test-cluster'    
 
   # Apply deployment
   - name: 'gcr.io/cloud-builders/kubectl'
-    args: ['set', 'image', 'deployment/mydepl', 'my-image=gcr.io/my-project/myimage']
+    args: ['apply', '-f', 'deployment.yaml']
     env:
-    - 'CLOUDSDK_COMPUTE_ZONE=us-east4-b'
-    - 'CLOUDSDK_CONTAINER_CLUSTER=my-cluster'
+      - 'CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=genbook-test-cluster'    
