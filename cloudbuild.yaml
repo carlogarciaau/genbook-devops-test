@@ -1,0 +1,31 @@
+steps:
+  # Build the docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'asia.gcr.io/genbook-test-285222/genbook-test', '.']
+  
+  # Push image to GCR
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'asia.gcr.io/genbook-test-285222/genbook-test']
+
+  # Copy the app config file from GCS bucket
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['gsutil', 'cp', 'gs://genbook-test/application.properties', 'application.properties']
+
+  # Prepare configmap yaml
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - '-c'
+      - |-
+        kubectl create configmap hello-world-config --from-file application.properties --dry-run=client -o yaml > configmap.yaml
+
+  # Apply configmap
+  # kubectl apply -f configmap.yaml
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['apply', '-f', 'configmap.yaml']
+
+  # Apply deployment
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['set', 'image', 'deployment/mydepl', 'my-image=gcr.io/my-project/myimage']
+    env:
+    - 'CLOUDSDK_COMPUTE_ZONE=us-east4-b'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=my-cluster'

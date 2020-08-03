@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: genbook-test
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: genbook-test
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: genbook-test
+    spec:
+      containers:
+      - name: devops-hello-world
+        image: asia.gcr.io/genbook-test-285222/genbook-test
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 512Mi
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 120
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 120
+        volumeMounts:
+          - name: config-volume
+            mountPath: /opt/config/application.properties
+            subPath: application.properties
+      volumes:
+        - name: config-volume
+          configMap:
+            name: hello-world-config

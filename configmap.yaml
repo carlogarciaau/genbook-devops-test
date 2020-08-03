@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  application.properties: |-
+    version=1.0
+    name=TestApp
+    date=2020-08-03
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: hello-world-config
