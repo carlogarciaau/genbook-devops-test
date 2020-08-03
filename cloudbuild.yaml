@@ -34,4 +34,11 @@ steps:
     args: ['apply', '-f', 'deployment.yaml']
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=genbook-test-cluster'    
+      - 'CLOUDSDK_CONTAINER_CLUSTER=genbook-test-cluster'   
+   
+  # Expose service
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['apply', '-f', 'service.yaml']
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=genbook-test-cluster'  
