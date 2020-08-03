@@ -9,7 +9,7 @@ steps:
 
   # Copy the app config file from GCS bucket
   - name: 'gcr.io/cloud-builders/gsutil'
-    args: ['gsutil', 'cp', 'gs://genbook-test/application.properties', 'application.properties']
+    args: ['cp', 'gs://genbook-test/application.properties', 'application.properties']
 
   # Prepare configmap yaml
   - name: 'gcr.io/cloud-builders/kubectl'
