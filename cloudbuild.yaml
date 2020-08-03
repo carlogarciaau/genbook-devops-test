@@ -13,6 +13,7 @@ steps:
 
   # Prepare configmap yaml
   - name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: 'bash'
     args:
       - '-c'
       - |-
